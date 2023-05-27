@@ -1,0 +1,6 @@
+@font-face {
+    font-family: 'Days Sans';
+    src: local('Days Sans Black'), local('DaysSansBlack'), url('dayssansblack.woff2') format('woff2'), url('dayssansblack.woff') format('woff'), url('dayssansblack.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}

@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "428376461010",
+    "project_id": "pcbg-eaf0a",
+    "storage_bucket": "pcbg-eaf0a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428376461010:android:4015f18a3c65591be5e70b",
+        "android_client_info": {
+          "package_name": "com.v3sl.PCBG"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "428376461010-2fn5u4injqj1du1qv77qfchd5572tfqu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.v3sl.PCBG",
+            "certificate_hash": "111e415c1ff8ea60c8ef9a295fd99a5ff81688bd"
+          }
+        },
+        {
+          "client_id": "428376461010-cfii2mfevt69j71kj5tmlu4nrj8e3mit.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.v3sl.PCBG",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "428376461010-g48mt31fkv35j08vfdalp5rorckarlt5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.v3sl.PCBG",
+            "certificate_hash": "3f504e5695f803d945c427382dca4982eb0d607f"
+          }
+        },
+        {
+          "client_id": "428376461010-lkrhf0e172jo3itbbfr839ul4hh6h21c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATOnLzFJopuO9L4kdarmVPFuoWOeXVkZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "428376461010-8pql8ftnvopmnujra24kprs855j2cs9h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
