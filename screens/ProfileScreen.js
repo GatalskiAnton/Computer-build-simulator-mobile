@@ -6,10 +6,27 @@ import { StyleSheet } from 'react-native'
 import 'expo-dev-client';
 import { firebase } from '../config'
 import DefaultButton from './ScreenComponents/DefaultButton'
-import { fontPixel, heightPixelS } from '../global/adaptiveFunctions'
+import { fontPixel, heightPixelS, widthPixel } from '../global/adaptiveFunctions'
 import globalStyles from '../global/globalStyles'
-
+import auth from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 export default class ProfileScreen extends Component {
+
+
+    async logout() {
+        await auth().signOut().then(async () => {
+            await GoogleSignin.signOut().then(this.props.navigation.navigate("EnterScreen")).catch(error => console.log(error));
+        }).catch(error => console.log(error));
+
+    }
+
+    componentDidMount() {
+        console.ignoreLogs = true;
+        GoogleSignin.configure({
+            webClientId: '428376461010-8pql8ftnvopmnujra24kprs855j2cs9h.apps.googleusercontent.com',
+        });
+    }
+
 
     render() {
         return (
@@ -18,20 +35,48 @@ export default class ProfileScreen extends Component {
 
                     <Text style={globalStyles.text}>Welcome to PCBUILDER</Text>
                     <View style={styles.infoContainer}>
-                        <Text style={styles.infoText}>account email {"\n"}{firebase.auth().currentUser?.email}{"\n"}</Text>
-                        <Text style={styles.infoText}>account id{"\n"}{firebase.auth().currentUser?.uid}{"\n"}</Text>
+                        {
+                            auth().currentUser.email == null ? <Text style={styles.infoText}>guest</Text> :
+                                <View>
+                                    <Text style={styles.infoText}>account email {"\n"}{auth().currentUser.email}{"\n"}</Text>
+                                    <Text style={styles.infoText}>account id{"\n"}{auth().currentUser.uid}{"\n"}</Text>
+                                </View>
+
+                        }
                     </View>
-                    <DefaultButton
-                        text={"Change password"}
-                        style={styles.button}
-                        textStyle={styles.buttonText}
-                        onPress={() => this.props.navigation.navigate("ResetPasswordScreen")}
-                    />
-                    <DefaultButton
-                        text={"logout"}
-                        style={styles.button}
-                        textStyle={styles.buttonText}
-                    />
+                    {
+                        auth().currentUser.email == null ?
+                            <View>
+                                <DefaultButton
+                                    text={"sign in"}
+                                    style={styles.button}
+                                    textStyle={styles.buttonText}
+                                    onPress={() => this.props.navigation.navigate("LogInScreen")}
+                                />
+                                <DefaultButton
+                                    text={"sign up"}
+                                    style={styles.button}
+                                    textStyle={styles.buttonText}
+                                    onPress={() => this.props.navigation.navigate("SignUpScreen")}
+                                />
+                            </View> :
+                            <View>
+                                <DefaultButton
+                                    text={"Change password"}
+                                    style={styles.button}
+                                    textStyle={styles.buttonText}
+                                    onPress={() => this.props.navigation.navigate("ResetPasswordScreen")}
+                                />
+                                <DefaultButton
+                                    text={"logout"}
+                                    style={styles.button}
+                                    textStyle={styles.buttonText}
+                                    onPress={() => this.logout()}
+                                />
+                            </View>
+
+                    }
+
                 </View>
                 <Footer
                     profileSettings={true}
@@ -61,6 +106,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Days',
         color: 'rgba(255,255,255,1)',
         fontSize: fontPixel(20),
+        width: widthPixel(300),
     },
     infoContainer: {
         width: '100%',

@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react'
 import Background from './ScreenComponents/Background'
 import DefaultButton from './ScreenComponents/DefaultButton'
@@ -5,12 +6,20 @@ import { StyleSheet, Text } from 'react-native'
 import { fontPixel, heightPixelS } from '../global/adaptiveFunctions'
 import globalStyles from '../global/globalStyles';
 import { StatusBar } from 'react-native'
+import auth from '@react-native-firebase/auth';
 
 export default class EnterScreen extends React.Component {
 
     componentDidMount() {
         StatusBar.setBarStyle('light-content', true);
         StatusBar.setBackgroundColor("rgba(50,53,60,1)")
+        if (auth().currentUser != null) {
+            this.props.navigation.navigate("ProfileScreen");
+        }
+    }
+
+    async handleGuestButton() {
+        await auth().signInAnonymously().then(() => this.props.navigation.navigate("ProfileScreen")).catch(error => console.log(error));
     }
 
     render() {
@@ -24,7 +33,7 @@ export default class EnterScreen extends React.Component {
                 />
                 <DefaultButton
                     text={"Continue as guest"}
-                    onPress={() => this.props.navigation.navigate("MenuScreen")}
+                    onPress={() => this.handleGuestButton()}
                     style={styles.button}
                     textStyle={styles.buttonText}
                 />

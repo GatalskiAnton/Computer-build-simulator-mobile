@@ -8,6 +8,8 @@ import UserScreen from "../screens/SignUpScreen"
 import MenuScreen from "../screens/MenuScreen"
 import ResetPasswordScreen from "../screens/ResetPasswordScreen"
 import ShoppingcartScreen from "../screens/ScreenComponents/ShoppingcartScreen"
+import SelectionScreen from "../screens/SelectionScreen"
+import ItemInfoScreen from "../screens/ItemInfoScreen"
 
 const RootStack = createStackNavigator(
     {
@@ -58,6 +60,102 @@ const RootStack = createStackNavigator(
         },
         ShoppingcartScreen: {
             screen: ShoppingcartScreen,
+            navigationOptions: {
+                headerShown: false,
+            },
+        },
+        SelectCPUScreen: {
+            screen: ({ navigation }) => <SelectionScreen
+                navigation={navigation}
+                componentName={"CPU"}
+                component={"CPU"}
+            />,
+            navigationOptions: {
+                headerShown: false,
+            },
+        },
+        SelectMotherboardScreen: {
+            screen: ({ navigation }) => <SelectionScreen
+                navigation={navigation}
+                componentName={"Motherboard"}
+                component={"Motherboard"}
+            />,
+            navigationOptions: {
+                headerShown: false,
+            },
+        },
+        SelectCoolerScreen: {
+            screen: ({ navigation }) => <SelectionScreen
+                navigation={navigation}
+                componentName={"Cooler"}
+                component={"Cooler"}
+            />,
+            navigationOptions: {
+                headerShown: false,
+            },
+        },
+        SelectPowerSupplyScreen: {
+            screen: ({ navigation }) => <SelectionScreen
+                navigation={navigation}
+                componentName={"Power supply"}
+                component={"PowerSupply"}
+            />,
+            navigationOptions: {
+                headerShown: false,
+            },
+        },
+        SelectRAMScreen: {
+            screen: ({ navigation }) => <SelectionScreen
+                navigation={navigation}
+                componentName={"RAM"}
+                component={"RAM"}
+            />,
+            navigationOptions: {
+                headerShown: false,
+            },
+        },
+        SelectSSDScreen: {
+            screen: ({ navigation }) => <SelectionScreen
+                navigation={navigation}
+                componentName={"SSD"}
+                component={"SSD"}
+            />,
+            navigationOptions: {
+                headerShown: false,
+            },
+        },
+        SelectHDDScreen: {
+            screen: ({ navigation }) => <SelectionScreen
+                navigation={navigation}
+                componentName={"HDD"}
+                component={"HDD"}
+            />,
+            navigationOptions: {
+                headerShown: false,
+            },
+        },
+        SelectCGUScreen: {
+            screen: ({ navigation }) => <SelectionScreen
+                navigation={navigation}
+                componentName={"GPU"}
+                component={"GPU"}
+            />,
+            navigationOptions: {
+                headerShown: false,
+            },
+        },
+        SelectPCCaseScreen: {
+            screen: ({ navigation }) => <SelectionScreen
+                navigation={navigation}
+                componentName={"PC case"}
+                component={"PCCase"}
+            />,
+            navigationOptions: {
+                headerShown: false,
+            },
+        },
+        ItemInfoScreen: {
+            screen: ItemInfoScreen,
             navigationOptions: {
                 headerShown: false,
             },

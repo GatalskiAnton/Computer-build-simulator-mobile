@@ -1,7 +1,7 @@
 import { Text } from 'react-native'
 import React, { Component } from 'react'
 import { Pressable, View } from 'react-native'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import globalStyles from '../../global/globalStyles';
 import { heightPixelS, widthPixel } from '../../global/adaptiveFunctions'
 import Svg, { Defs, Rect, LinearGradient, Stop, Ellipse } from 'react-native-svg';
@@ -28,10 +28,10 @@ export default class DefaultButton extends Component {
                     <Rect width="100%" height="100%" fill="url(#grad)" rx="6" ry="6"
                     />
                 </Svg>
-                <Pressable onPress={this.props.onPress}
+                <TouchableOpacity onPress={this.props.onPress}
                 >
                     <Text style={[globalStyles.text, this.props.textStyle]}>{this.props.text}</Text>
-                </Pressable>
+                </TouchableOpacity>
             </View>
 
         )

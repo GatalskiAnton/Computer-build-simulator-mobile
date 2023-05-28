@@ -42,13 +42,13 @@ export default class UserScreen extends React.Component {
             const { idToken } = await GoogleSignin.signIn();
             const googleCredential = auth.GoogleAuthProvider.credential(idToken);
             auth().signInWithCredential(googleCredential)
-                .then((user) => {
+                .then(async (user) => {
                     auth().currentUser.googleAcc = true;
                     this.setState({
                         emailText: auth().currentUser.email,
                         passwordText: "",
                     });
-                    this.loginToDbAndNavigate();
+                    await this.loginToDbAndNavigate(true);
                 }).catch((error) => console.log(error));
         }
         catch (error) {
@@ -138,7 +138,7 @@ export default class UserScreen extends React.Component {
         this.props.navigation.navigate("LogInScreen")
     }
 
-    async regUserToDb() {
+    async regUserToDb(googleAcc) {
         await fetch("http://192.168.0.100:9090/PCBuilder_war_exploded/user/register",
             {
                 method: "POST",
@@ -151,7 +151,7 @@ export default class UserScreen extends React.Component {
                 body: JSON.stringify({
                     "login": this.state.emailText,
                     "password": this.state.passwordText,
-                    "googleAccount": auth().currentUser.googleAcc,
+                    "googleAccount": googleAcc
                 })
             }).then(response => {
                 if (response.ok) {
@@ -184,7 +184,31 @@ export default class UserScreen extends React.Component {
             ).catch(error => console.log(error));
     }
 
-    async loginToDbAndNavigate() {
+    async updatePassword() {
+        await fetch("http://192.168.0.100:9090/PCBuilder_war_exploded/user/changePassword",
+            {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    requestType: "componentRequest",
+                },
+                body: JSON.stringify({
+                    "login": this.state.emailText,
+                    "newPassword": this.state.passwordText,
+                    "googleAccount": auth().currentUser.googleAcc,
+                })
+            }).then(response => {
+                if (!response.ok) {
+                    if (response.status !== 999) {
+                        console.log("some error");
+                    }
+                    console.log(response.headers.get("errorType"));
+                }
+            }).catch(error => console.log(error));
+    }
+
+    async loginToDbAndNavigate(googleAcc) {
         let isExists = true;
         await fetch("http://192.168.0.100:9090/PCBuilder_war_exploded/user/login",
             {
@@ -198,9 +222,9 @@ export default class UserScreen extends React.Component {
                 body: JSON.stringify({
                     "login": this.state.emailText,
                     "password": this.state.passwordText,
-                    "googleAccount": auth().currentUser.googleAcc,
+                    "googleAccount": googleAcc
                 })
-            }).then(response => {
+            }).then(async response => {
                 if (!response.ok) {
                     if (response.status !== 999) {
                         console.log("some error");
@@ -208,14 +232,11 @@ export default class UserScreen extends React.Component {
                     switch (response.headers.get("errorType")) {
                         case "userNotFound": {
                             isExists = false;
-                            break;
+                            return;
                         }
                         case "incorrectPassword": {
-                            this.setState({
-                                inputError: true,
-                                errorMessage: 'unexpected error '
-                            });
-                            return;
+                            this.updatePassword();
+                            break;
                         }
                         case "noConnection": {
                             this.setState({
@@ -232,7 +253,7 @@ export default class UserScreen extends React.Component {
                 return;
             }).then(() => {
                 if (!isExists) {
-                    this.regUserToDb().then(() => this.props.navigation.navigate("ProfileScreen"));
+                    this.regUserToDb(googleAcc).then(() => this.props.navigation.navigate("ProfileScreen"));
                 }
                 else {
                     this.props.navigation.navigate("ProfileScreen");
@@ -241,23 +262,23 @@ export default class UserScreen extends React.Component {
     }
 
     async signIn() {
-        await firebase.auth().signInWithEmailAndPassword(this.state.emailText, this.state.passwordText)
+        await firebase.auth().signInWithEmailAndPassword(this.state.emailText, this.state.passwordText).then(async () => {
+            if (firebase.auth().currentUser.emailVerified) {
+                auth().currentUser.googleAcc = false;
+                await this.loginToDbAndNavigate(false);
+            }
+            else {
+                alert("Please, verify your email");
+            }
+        })
             .catch((error) => {
                 if (error.code === "auth/wrong-password") {
                     this.setState({
                         inputError: true,
                         errorMessage: 'incorrect password'
                     });
-                    return;
                 }
-            }).then(async () => {
-                if (firebase.auth().currentUser.emailVerified) {
-                    auth().currentUser.googleAcc = false;
-                    this.loginToDbAndNavigate();
-                }
-                else {
-                    alert("Please, verify your email");
-                }
+                return;
             });
     }
 

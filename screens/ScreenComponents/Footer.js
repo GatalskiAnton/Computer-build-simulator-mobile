@@ -2,7 +2,7 @@ import { Text, View } from 'react-native'
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
 import { StatusBar } from 'react-native'
-import { AntDesign, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign, Entypo, Feather, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { Pressable } from 'react-native';
 import { heightPixelS } from '../../global/adaptiveFunctions';
 
@@ -44,8 +44,8 @@ export default class Footer extends Component {
                 <Pressable style={styles.footerItem}
                     onPress={() => this.props.navigation.navigate("ShoppingcartScreen")}
                 >
-                    <AntDesign
-                        name={"shoppingcart"}
+                    <MaterialIcons
+                        name={"computer"}
                         color={this.props.shoppingcart ? "rgba(200,200,200,1)" : "rgba(20,23,30,1)"}
                         size={this.state.height}
                     />
