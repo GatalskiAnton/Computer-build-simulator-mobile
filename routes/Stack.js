@@ -7,7 +7,7 @@ import EnterScreen from "../screens/EnterScreen"
 import UserScreen from "../screens/SignUpScreen"
 import MenuScreen from "../screens/MenuScreen"
 import ResetPasswordScreen from "../screens/ResetPasswordScreen"
-import ShoppingcartScreen from "../screens/ScreenComponents/ShoppingcartScreen"
+import ShoppingcartScreen from "../screens/ShoppingcartScreen"
 import SelectionScreen from "../screens/SelectionScreen"
 import ItemInfoScreen from "../screens/ItemInfoScreen"
 

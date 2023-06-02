@@ -32,7 +32,6 @@ export default class ProfileScreen extends Component {
         return (
             <Background>
                 <View style={styles.main}>
-
                     <Text style={globalStyles.text}>Welcome to PCBUILDER</Text>
                     <View style={styles.infoContainer}>
                         {

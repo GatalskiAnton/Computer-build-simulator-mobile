@@ -2,6 +2,8 @@ import React from "react";
 import Navigator from './routes/Stack';
 import * as Font from 'expo-font';
 import { enableScreens } from 'react-native-screens';
+import { View } from "react-native";
+import Background from "./screens/ScreenComponents/Background";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -25,10 +27,15 @@ export default class App extends React.Component {
   }
 
   render() {
-    if (!this.state.fontsLoaded) {
-      return null;
-    }
-    return <Navigator />
+    return <Background>
+      <Text>
+        123321432432432432432432432
+      </Text>
+    </Background>
+    // if (!this.state.fontsLoaded) {
+    //   return null;
+    // }
+    // return <Navigator />
 
 
   }

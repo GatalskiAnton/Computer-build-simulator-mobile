@@ -10,6 +10,7 @@ import ItemInfoScreen from './ItemInfoScreen';
 import InputField from './ScreenComponents/InputField';
 import DefaultButton from './ScreenComponents/DefaultButton';
 import SearchComponentBar from './ScreenComponents/SearchComponentBar'
+import { IP } from '../global/globalVars';
 
 export default class SelectionScreen extends Component {
 
@@ -63,7 +64,7 @@ export default class SelectionScreen extends Component {
     }
 
     async getComponent() {
-        await fetch("http://192.168.0.100:9090/PCBuilder_war_exploded/component/getAll", {
+        await fetch("http://" + IP + ":9090/PCBuilder_war_exploded/component/getAll", {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -112,7 +113,7 @@ export default class SelectionScreen extends Component {
                         <SearchComponentBar
                             title="search"
                             style={styles.search}
-                            onChangeText={(text) => { this.setState({ textForSearch: text }); console.log(this.state.textForSearch) }}
+                            onChangeText={(text) => { this.setState({ textForSearch: text }); }}
                         />
                         <DefaultButton
                             text="Back to select"

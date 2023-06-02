@@ -4,12 +4,12 @@ import globalStyles from '../global/globalStyles'
 import InputField from './ScreenComponents/InputField'
 import Background from './ScreenComponents/Background'
 import DefaultButton from './ScreenComponents/DefaultButton'
-import { firebase } from '../config'
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import 'expo-dev-client';
 import React from 'react'
 import PasswordToggle from './ScreenComponents/PasswordToggle'
+import { IP } from '../global/globalVars'
 
 console.warn = function () { }
 
@@ -116,7 +116,7 @@ export default class UserScreen extends React.Component {
     }
 
     async signUp() {
-        await firebase.auth().createUserWithEmailAndPassword(this.state.emailText, this.state.passwordText).catch(error => {
+        await auth().createUserWithEmailAndPassword(this.state.emailText, this.state.passwordText).catch(error => {
             if (error.code === 'auth/email-already-in-use') {
                 this.setState({
                     inputError: true,
@@ -132,14 +132,13 @@ export default class UserScreen extends React.Component {
                 return;
             }
         });
-        await firebase.auth().currentUser.sendEmailVerification().catch(error => console.log(error));
-        await firebase.auth().signOut().catch(error => { console.log(error); });
+        await auth().currentUser.sendEmailVerification().catch(error => console.log(error));
         Alert.alert("Check your email", "Please verify your email. Check out link in your inbox");
         this.props.navigation.navigate("LogInScreen")
     }
 
     async regUserToDb(googleAcc) {
-        await fetch("http://192.168.0.100:9090/PCBuilder_war_exploded/user/register",
+        await fetch("http://" + IP + ":9090/PCBuilder_war_exploded/user/register",
             {
                 method: "POST",
                 headers: {
@@ -169,7 +168,6 @@ export default class UserScreen extends React.Component {
                         return;
                     }
                     case "invalidLogin", "shortPassword": {
-                        console.log("incorrectData???")
                         return;
                     }
                     case "noConnection": {
@@ -185,7 +183,7 @@ export default class UserScreen extends React.Component {
     }
 
     async updatePassword() {
-        await fetch("http://192.168.0.100:9090/PCBuilder_war_exploded/user/changePassword",
+        await fetch("http://" + IP + ":9090/PCBuilder_war_exploded/user/changePassword",
             {
                 method: "POST",
                 headers: {
@@ -210,7 +208,7 @@ export default class UserScreen extends React.Component {
 
     async loginToDbAndNavigate(googleAcc) {
         let isExists = true;
-        await fetch("http://192.168.0.100:9090/PCBuilder_war_exploded/user/login",
+        await fetch("http://" + IP + ":9090/PCBuilder_war_exploded/user/login",
             {
                 method: "POST",
                 headers: {
@@ -262,8 +260,9 @@ export default class UserScreen extends React.Component {
     }
 
     async signIn() {
-        await firebase.auth().signInWithEmailAndPassword(this.state.emailText, this.state.passwordText).then(async () => {
-            if (firebase.auth().currentUser.emailVerified) {
+        auth().signOut();
+        await auth().signInWithEmailAndPassword(this.state.emailText, this.state.passwordText).then(async () => {
+            if (auth().currentUser.emailVerified) {
                 auth().currentUser.googleAcc = false;
                 await this.loginToDbAndNavigate(false);
             }

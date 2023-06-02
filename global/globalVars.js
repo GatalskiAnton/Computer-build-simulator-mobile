@@ -8,5 +8,6 @@ const getLastItem = () => {
     return lastItem;
 }
 
+const IP = "192.168.129.225";
 
-export { setLastItem, getLastItem }
+export { setLastItem, getLastItem, IP }

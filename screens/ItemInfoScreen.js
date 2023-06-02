@@ -6,6 +6,7 @@ import { StyleSheet, Image, ScrollView } from 'react-native';
 import Footer from './ScreenComponents/Footer';
 import { fontPixel, heightPixel, heightPixelS, widthPixel } from '../global/adaptiveFunctions';
 import DefaultButton from './ScreenComponents/DefaultButton';
+import { IP } from '../global/globalVars';
 
 export default class ItemInfoScreen extends Component {
 
@@ -21,7 +22,7 @@ export default class ItemInfoScreen extends Component {
     }
 
     async getComponent() {
-        await fetch("http://192.168.0.100:9090/PCBuilder_war_exploded/component/getInfo", {
+        await fetch("http://" + IP + ":9090/PCBuilder_war_exploded/component/getInfo", {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -66,7 +67,7 @@ export default class ItemInfoScreen extends Component {
     }
 
     async selectItem() {
-        await fetch("http://192.168.0.100:9090/PCBuilder_war_exploded/component/select", {
+        await fetch("http://" + IP + ":9090/PCBuilder_war_exploded/component/select", {
             method: "POST",
             headers: {
                 Accept: "application/json",
